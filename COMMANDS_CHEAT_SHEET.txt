@@ -1,0 +1,60 @@
+===================================================================
+   PUMP READER OCR - COMMANDS CHEAT SHEET
+===================================================================
+
+-------------------------------------------------------------------
+ 1. INSTALLATION COMMANDS (Run once)
+-------------------------------------------------------------------
+# Create Environment (Recommended)
+conda create -n ocr_env python=3.10
+conda activate ocr_env
+
+# Install Required Libraries
+pip install paddlepaddle paddleocr opencv-python opencv-contrib-python
+pip install pandas shapely openpyxl requests scikit-learn
+
+-------------------------------------------------------------------
+ 2. RUNNING THE CODE
+-------------------------------------------------------------------
+# Activate Environment (Important!)
+conda activate ocr_env
+
+# Basic Run (Fastest)
+python src/ocr.py "path/to/video.mp4" --out ./results
+
+# Run with AI Validation (Most Accurate)
+python src/ocr.py "path/to/video.mp4" --out ./results --use-ollama
+
+# Run on an Image
+python src/ocr.py "path/to/image.jpg" --mode image --out ./results
+
+-------------------------------------------------------------------
+ 3. GITHUB COMMANDS
+-------------------------------------------------------------------
+# SETUP (First time only)
+git init
+git config --global user.name "Your Name"
+git config --global user.email "your@email.com"
+git branch -M main
+git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
+
+# DAILY USE (To save and upload changes)
+git add .
+git commit -m "Describe your changes here"
+git push
+
+# IF YOU GET STUCK (Force update from cloud)
+git pull origin main
+
+-------------------------------------------------------------------
+ 4. TROUBLESHOOTING
+-------------------------------------------------------------------
+# If git says "remote origin already exists":
+git remote remove origin
+# Then add the correct one again
+
+# If python says "Module not found":
+pip install <module_name> 
+# Example: pip install requests
+
+===================================================================
