@@ -1,0 +1,93 @@
+# Hardcoded Static ROIs - Quick Guide
+
+## ✅ ROIs Are Now in the Code!
+
+Your static ROI coordinates are now **hardcoded directly in `ocr.py`** - no external files needed!
+
+---
+
+## 🎯 How to Use
+
+### For Images:
+```powershell
+conda activate ocr_env
+cd C:\Users\niteshk\Desktop\vs\OCR
+
+python ocr.py "C:\Users\niteshk\Desktop\OCR\reader.jpg" --mode image --out ./results --use-static-rois
+```
+
+### For Videos:
+```powershell
+python ocr.py "C:\Users\niteshk\Desktop\OCR_Videos\pump_reader.mp4" --out ./results --use-static-rois
+```
+
+### With All Features:
+```powershell
+python ocr.py "video.mp4" --out ./results --use-static-rois --use-ollama --excel
+```
+
+---
+
+## 📝 Your Hardcoded ROIs
+
+Located in `ocr.py` at the `get_hardcoded_rois()` function (around line 100):
+
+```python
+STATIC_ROIS = {
+    "ROI_1": [[1276, 700], [2556, 698], [2556, 916], [1278, 915]],
+    "ROI_2": [[1272, 941], [2554, 941], [2553, 1248], [1271, 1246]],
+    "ROI_3": [[1460, 1424], [2356, 1423], [2355, 1618], [1458, 1619]],
+    "ROI_4": [[1265, 1648], [2570, 1649], [2573, 1952], [1266, 1952]]
+}
+```
+
+---
+
+## 🔧 How to Edit ROI Coordinates
+
+1. Open `ocr.py` in your editor
+2. Find the `get_hardcoded_rois()` function (around line 100)
+3. Edit the `STATIC_ROIS` dictionary coordinates
+4. Save the file
+5. Run your script - it will use the new coordinates!
+
+---
+
+## 📊 Three Ways to Use ROIs
+
+| Method | Command Flag | When to Use |
+|--------|-------------|-------------|
+| **Auto-detect** | (none) | Different images/videos |
+| **Hardcoded** | `--use-static-rois` | Same setup, no config file |
+| **Config file** | `--roi-config roi_config.json` | Multiple setups |
+
+---
+
+## ⚡ Quick Commands
+
+```powershell
+# Use hardcoded ROIs (simplest)
+python ocr.py "image.jpg" --mode image --use-static-rois
+
+# Use hardcoded ROIs for video
+python ocr.py "video.mp4" --use-static-rois
+
+# Full featured
+python ocr.py "video.mp4" --use-static-rois --use-ollama --excel
+
+# Auto-detect (no static ROIs)
+python ocr.py "video.mp4"
+```
+
+---
+
+## 💡 Benefits
+
+✅ **No external files** - Everything in one script  
+✅ **Easy to edit** - Just open the Python file  
+✅ **Version control friendly** - ROIs tracked with code  
+✅ **Portable** - Copy one file, get everything  
+
+---
+
+**You're all set!** Just use `--use-static-rois` and your hardcoded coordinates will be used automatically. 🚀

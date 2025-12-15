@@ -1,0 +1,67 @@
+==================================================================
+OCR ENVIRONMENT SETUP GUIDE (WINDOWS CPU)
+==================================================================
+
+Follow these steps exactly to set up the environment for running the OCR script.
+
+------------------------------------------------------------------
+PREREQUISITE: Visual C++ Redistributable
+------------------------------------------------------------------
+1. Download and install the Visual C++ Redistributable:
+   https://aka.ms/vs/17/release/vc_redist.x64.exe
+   
+   *IMPORTANT: Restart your computer after installing this!*
+
+------------------------------------------------------------------
+STEP 1: Create Anaconda Environment
+------------------------------------------------------------------
+Open your Anaconda Prompt and run:
+
+conda create -n ocr_env python=3.10 -y
+conda activate ocr_env
+
+(Note: We use Python 3.10 as it is very stable for these libraries)
+
+------------------------------------------------------------------
+STEP 2: Install PyTorch (CPU Version)
+------------------------------------------------------------------
+Run this command to install the CPU-only version of PyTorch:
+
+pip install torch==2.2.2 torchvision==0.17.2 --index-url https://download.pytorch.org/whl/cpu
+
+------------------------------------------------------------------
+STEP 3: Install PaddlePaddle & PaddleOCR
+------------------------------------------------------------------
+Install the OCR engine and its core library:
+
+pip install paddlepaddle==2.6.1
+pip install paddleocr==2.7.3
+
+------------------------------------------------------------------
+STEP 4: Install Compatible Dependencies (CRITICAL)
+------------------------------------------------------------------
+We must install specific versions of NumPy and OpenCV to avoid crashes:
+
+pip install "numpy<2.0.0"
+pip install "opencv-python<4.10.0"
+pip install pandas shapely scikit-learn
+
+------------------------------------------------------------------
+STEP 5: Verify Installation
+------------------------------------------------------------------
+Run this python command to check if everything loads correctly:
+
+python -c "import torch; import paddle; import cv2; import numpy; print('Setup Complete! NumPy version:', numpy.__version__)"
+
+------------------------------------------------------------------
+STEP 6: Run the OCR Script
+------------------------------------------------------------------
+Navigate to your folder and run:
+
+python ocr.py "C:/path/to/your/video.mp4" --out ./results --mode video --langs en --n-rois 4 --frame-skip 5
+
+==================================================================
+TROUBLESHOOTING
+==================================================================
+- If you see "[WinError 127]": Re-install the VC++ Redistributable (Prerequisite step).
+- If you see "NumPy 2.x" errors: Run 'pip install "numpy<2.0.0" --force-reinstall'

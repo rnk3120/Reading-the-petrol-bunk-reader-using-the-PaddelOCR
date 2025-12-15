@@ -1,0 +1,54 @@
+# ========================================
+# COPY AND PASTE THESE COMMANDS NOW
+# ========================================
+
+# YOU MUST RUN THESE COMMANDS - NumPy is still 2.2.6!
+
+# Step 1: Uninstall ALL affected packages
+pip uninstall -y numpy opencv-python opencv-contrib-python paddlepaddle-gpu paddlepaddle paddleocr
+
+# Step 2: Install NumPy 1.23.5 (CRITICAL)
+pip install "numpy==1.23.5"
+
+# Step 3: Verify NumPy is now 1.23.5
+python3 -c "import numpy; print('NumPy:', numpy.__version__)"
+
+# Step 4: Install OpenCV
+pip install opencv-python==4.8.1.78
+
+# Step 5: Install PaddlePaddle
+pip install paddlepaddle-gpu==2.5.2 -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+# Step 6: Install PaddleOCR
+pip install paddleocr==2.7.3
+
+# Step 7: Install other dependencies
+pip install pandas shapely scikit-learn Pillow pyclipper lmdb tqdm visualdl python-Levenshtein rapidfuzz
+
+# Step 8: VERIFY - Should show NO errors
+python3 -c "import numpy; print('NumPy:', numpy.__version__)"
+python3 -c "import cv2; print('OpenCV: OK')"
+python3 -c "import paddle; print('PaddlePaddle: OK')"
+
+# Step 9: Test PaddleOCR
+python3 << 'EOF'
+from paddleocr import PaddleOCR
+ocr = PaddleOCR(lang='en', use_angle_cls=True, show_log=False)
+print('PaddleOCR: OK')
+EOF
+
+# Step 10: Run your OCR script
+python ocr.py /home/blp/Nitesh/OCR/OCR_Videos/petrol_reader_1.mp4 --out ./results --mode video --engine paddle --langs en --n-rois 4 --frame-skip 0 --save-annotated-video
+
+
+# ========================================
+# IF NUMPY IS STILL 2.x AFTER STEP 3:
+# ========================================
+
+# Use conda to force NumPy 1.23.5
+conda install numpy=1.23.5 -y
+
+# Then reinstall everything
+pip install --force-reinstall opencv-python==4.8.1.78
+pip install --force-reinstall paddlepaddle-gpu==2.5.2 -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install --force-reinstall paddleocr==2.7.3

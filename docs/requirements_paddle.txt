@@ -1,0 +1,33 @@
+# PaddlePaddle OCR Requirements
+# Install these in order
+
+# Core dependencies
+opencv-python>=4.5.0
+numpy>=1.19.0
+pandas>=1.1.0
+shapely>=1.7.0
+scikit-learn>=0.24.0
+
+# PaddlePaddle GPU version (CUDA 12.2)
+# For CUDA 12.2 (or 12.0+):
+paddlepaddle-gpu==2.6.1
+
+# Alternative for older CUDA versions:
+# CUDA 11.2: paddlepaddle-gpu==2.5.1
+# CUDA 11.6: paddlepaddle-gpu==2.5.1.post116
+# CUDA 11.7: paddlepaddle-gpu==2.5.1.post117
+
+# Alternative for CPU only (comment out GPU version above and uncomment below):
+# paddlepaddle==2.5.1
+
+# PaddleOCR
+paddleocr>=2.7.0
+
+# Additional dependencies for PaddleOCR
+Pillow>=8.0.0
+pyclipper>=1.2.0
+lmdb>=1.2.0
+tqdm>=4.60.0
+visualdl>=2.2.0
+python-Levenshtein>=0.12.0
+rapidfuzz>=2.0.0

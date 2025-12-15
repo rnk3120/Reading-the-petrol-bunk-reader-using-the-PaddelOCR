@@ -1,0 +1,55 @@
+# ALTERNATIVE SOLUTION: Use EasyOCR Instead of PaddleOCR
+# If you can't fix the NumPy issue, use EasyOCR which is more compatible
+
+# ========================================
+# OPTION A: Fix NumPy and use PaddleOCR
+# ========================================
+
+# Run these commands (RECOMMENDED):
+pip uninstall -y numpy opencv-python paddlepaddle-gpu paddleocr
+pip install "numpy==1.23.5"
+pip install opencv-python==4.8.1.78
+pip install paddlepaddle-gpu==2.5.2 -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install paddleocr==2.7.3
+
+# Then run:
+python ocr.py /home/blp/Nitesh/OCR/OCR_Videos/petrol_reader_1.mp4 --out ./results --mode video --engine paddle --langs en --n-rois 4 --frame-skip 0 --save-annotated-video
+
+
+# ========================================
+# OPTION B: Use EasyOCR (Works with NumPy 2.x)
+# ========================================
+
+# Install EasyOCR (compatible with NumPy 2.x)
+pip install easyocr torch torchvision
+
+# Fix OpenCV for NumPy 2.x
+pip uninstall -y opencv-python
+pip install opencv-python --upgrade
+
+# Run with EasyOCR engine instead:
+python ocr.py /home/blp/Nitesh/OCR/OCR_Videos/petrol_reader_1.mp4 --out ./results --mode video --engine easyocr --langs en --n-rois 4 --frame-skip 0 --save-annotated-video
+
+
+# ========================================
+# OPTION C: Create New Conda Environment
+# ========================================
+
+# Create fresh environment with Python 3.10
+conda create -n ocr_env python=3.10 -y
+conda activate ocr_env
+
+# Install with specific NumPy version
+pip install "numpy==1.23.5"
+pip install opencv-python==4.8.1.78
+pip install paddlepaddle-gpu==2.5.2 -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install paddleocr==2.7.3
+pip install pandas shapely scikit-learn Pillow pyclipper lmdb tqdm visualdl python-Levenshtein rapidfuzz
+
+# Run OCR
+python ocr.py /home/blp/Nitesh/OCR/OCR_Videos/petrol_reader_1.mp4 --out ./results --mode video --engine paddle --langs en --n-rois 4 --frame-skip 0 --save-annotated-video
+
+
+# ========================================
+# RECOMMENDED: Try Option A first, then B if it fails
+# ========================================

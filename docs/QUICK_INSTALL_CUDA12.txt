@@ -1,0 +1,21 @@
+# Quick Installation Commands for CUDA 12.2
+# Copy and paste these commands into your terminal
+
+# Step 1: Activate conda environment
+conda activate paddle_gpu
+
+# Step 2: Install PaddlePaddle for CUDA 12.2
+pip install paddlepaddle-gpu==2.6.1 -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+# Step 3: Install PaddleOCR
+pip install paddleocr
+
+# Step 4: Install other dependencies
+pip install opencv-python numpy pandas shapely scikit-learn Pillow pyclipper lmdb tqdm visualdl python-Levenshtein rapidfuzz
+
+# Step 5: Verify installation
+python3 -c "import paddle; print(f'PaddlePaddle: {paddle.__version__}'); print(f'Device: {paddle.device.get_device()}')"
+python3 -c "from paddleocr import PaddleOCR; print('PaddleOCR: OK')"
+
+# Step 6: Run your OCR script
+python ocr.py /home/blp/Nitesh/OCR/OCR_Videos/petrol_reader_1.mp4 --out ./results --mode video --engine paddle --langs en --n-rois 4 --frame-skip 0 --save-annotated-video

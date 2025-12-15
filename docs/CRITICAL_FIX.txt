@@ -1,0 +1,62 @@
+# CRITICAL FIX - NumPy 2.x Compatibility Issue
+# Copy and paste these commands on your Linux system
+
+# The problem: NumPy 2.x is incompatible with PaddlePaddle 2.5.2 and OpenCV
+# Solution: Downgrade to NumPy 1.23.5 and reinstall affected packages
+
+# ============================================
+# OPTION 1: Quick Manual Fix (Recommended)
+# ============================================
+
+# Step 1: Uninstall NumPy 2.x and affected packages
+pip uninstall -y numpy opencv-python opencv-contrib-python
+
+# Step 2: Install compatible NumPy version
+pip install "numpy==1.23.5"
+
+# Step 3: Reinstall OpenCV
+pip install opencv-python
+
+# Step 4: Reinstall PaddlePaddle (force reinstall to link with new NumPy)
+pip install --force-reinstall --no-cache-dir paddlepaddle-gpu==2.5.2 -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+# Step 5: Reinstall PaddleOCR
+pip install --force-reinstall --no-cache-dir paddleocr==2.7.3
+
+# Step 6: Verify (should show NO warnings)
+python3 -c "import numpy; print('NumPy:', numpy.__version__)"
+python3 -c "import cv2; print('OpenCV:', cv2.__version__)"
+python3 -c "import paddle; print('PaddlePaddle:', paddle.__version__)"
+
+# Step 7: Test PaddleOCR
+python3 << 'EOF'
+from paddleocr import PaddleOCR
+ocr = PaddleOCR(lang='en', use_angle_cls=True, show_log=False)
+print('PaddleOCR works!')
+EOF
+
+# Step 8: Run your OCR script
+python ocr.py /home/blp/Nitesh/OCR/OCR_Videos/petrol_reader_1.mp4 --out ./results --mode video --engine paddle --langs en --n-rois 4 --frame-skip 0 --save-annotated-video
+
+
+# ============================================
+# OPTION 2: Automated Script
+# ============================================
+
+# Make the script executable and run it
+chmod +x complete_fix.sh
+./complete_fix.sh
+
+
+# ============================================
+# VERIFICATION COMMANDS
+# ============================================
+
+# Check all package versions
+pip list | grep -E "numpy|opencv|paddle"
+
+# Expected output:
+# numpy                    1.23.5
+# opencv-python            4.x.x.x
+# paddleocr                2.7.3
+# paddlepaddle-gpu         2.5.2

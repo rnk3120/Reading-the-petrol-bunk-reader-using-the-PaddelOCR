@@ -1,0 +1,74 @@
+# Windows CPU Installation Guide for OCR
+# Run these commands in PowerShell or Command Prompt
+
+# ========================================
+# STEP 1: Create a new conda environment
+# ========================================
+
+conda create -n ocr_cpu python=3.10 -y
+conda activate ocr_cpu
+
+
+# ========================================
+# STEP 2: Install NumPy 1.23.5 (compatible version)
+# ========================================
+
+pip install "numpy==1.23.5"
+
+
+# ========================================
+# STEP 3: Install OpenCV
+# ========================================
+
+pip install opencv-python==4.8.1.78
+
+
+# ========================================
+# STEP 4: Install PaddlePaddle CPU version
+# ========================================
+
+pip install paddlepaddle==2.5.2 -i https://pypi.tuna.tsinghua.edu.cn/simple
+
+
+# ========================================
+# STEP 5: Install PaddleOCR
+# ========================================
+
+pip install paddleocr==2.7.3
+
+
+# ========================================
+# STEP 6: Install other dependencies
+# ========================================
+
+pip install pandas shapely scikit-learn Pillow pyclipper lmdb tqdm visualdl python-Levenshtein rapidfuzz
+
+
+# ========================================
+# STEP 7: Verify installation
+# ========================================
+
+python -c "import numpy; print('NumPy:', numpy.__version__)"
+python -c "import cv2; print('OpenCV:', cv2.__version__)"
+python -c "import paddle; print('PaddlePaddle:', paddle.__version__)"
+python -c "from paddleocr import PaddleOCR; print('PaddleOCR: OK')"
+
+
+# ========================================
+# STEP 8: Run your OCR script
+# ========================================
+
+# For video processing:
+python ocr.py "path\to\your\video.mp4" --out ./results --mode video --engine paddle --langs en --n-rois 4 --frame-skip 0 --save-annotated-video
+
+# For image processing:
+python ocr.py "path\to\your\image.jpg" --out ./results --mode image --engine paddle --langs en --n-rois 4
+
+
+# ========================================
+# NOTES:
+# ========================================
+# - CPU processing will be slower than GPU (10-30x slower)
+# - For faster processing, increase --frame-skip value (e.g., --frame-skip 5)
+# - The script will work exactly the same, just slower
+# - All features are supported on CPU

@@ -1,0 +1,26 @@
+# QUICK FIX - Copy and paste these commands
+# Run on your Linux system (DellGPUDeepstream6)
+
+# Step 1: Activate environment
+conda activate paddle_gpu
+
+# Step 2: Remove incompatible versions
+pip uninstall -y paddlepaddle-gpu paddlepaddle paddleocr
+
+# Step 3: Install compatible versions for CUDA 12.2
+pip install paddlepaddle-gpu==2.5.2 -i https://pypi.tuna.tsinghua.edu.cn/simple
+pip install paddleocr==2.7.3
+
+# Step 4: Install dependencies (if not already installed)
+pip install opencv-python numpy pandas shapely scikit-learn Pillow pyclipper lmdb tqdm visualdl python-Levenshtein rapidfuzz
+
+# Step 5: Verify
+python3 -c "import paddle; print(f'✓ PaddlePaddle {paddle.__version__} on {paddle.device.get_device()}')"
+python3 -c "from paddleocr import PaddleOCR; ocr = PaddleOCR(lang='en', use_angle_cls=True, show_log=False); print('✓ PaddleOCR initialized successfully')"
+
+# Step 6: Copy updated ocr.py from Windows to Linux
+# On Windows: The file is at c:\Users\niteshk\Desktop\vs\ocr.py
+# Copy it to: /home/blp/Nitesh/OCR/ocr.py
+
+# Step 7: Run your OCR script
+python ocr.py /home/blp/Nitesh/OCR/OCR_Videos/petrol_reader_1.mp4 --out ./results --mode video --engine paddle --langs en --n-rois 4 --frame-skip 0 --save-annotated-video

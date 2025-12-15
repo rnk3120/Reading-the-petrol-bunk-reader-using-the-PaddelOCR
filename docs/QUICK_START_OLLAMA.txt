@@ -1,0 +1,121 @@
+=================================================================
+OLLAMA VALIDATION - QUICK START
+=================================================================
+
+✅ INSTALLATION COMPLETE!
+
+You now have:
+- Ollama 0.13.2 installed
+- LLaVA vision model downloaded (4.7GB)
+- Enhanced OCR script with AI validation
+- Helper scripts for easy usage
+
+=================================================================
+HOW TO USE (3 SIMPLE STEPS)
+=================================================================
+
+STEP 1: Start Ollama Service
+-----------------------------
+Double-click: start_ollama.bat
+
+OR in PowerShell:
+    ollama serve
+
+(Leave this window open while processing videos)
+
+
+STEP 2: Run OCR with Validation
+--------------------------------
+Option A - Using the helper script:
+    1. Edit run_ocr_with_validation.bat
+    2. Change VIDEO_PATH to your video file
+    3. Double-click the script
+
+Option B - Manual command:
+    python ocr.py "C:/path/to/video.mp4" --out ./results --use-ollama
+
+
+STEP 3: Check Results
+----------------------
+Look in the ./results folder for:
+- all_frames_TIMESTAMP.csv
+  → Every frame with OCR + Ollama validation
+  → New columns: "Ollama_ROI_3" and "Validation_Status"
+
+- stable_values_TIMESTAMP.csv
+  → Only stable readings (unchanged for 2-3 seconds)
+
+=================================================================
+WHAT HAPPENS DURING PROCESSING
+=================================================================
+
+Every frame:
+  → PaddleOCR extracts text (fast, 20 FPS)
+
+Every 4 seconds:
+  → Ollama AI validates the reading
+  → If OCR made a mistake, Ollama corrects it
+  → Status is logged: MATCH, CORRECTED, FILLED, or FAILED
+
+Example output:
+  [VALIDATION] Running Ollama check at 4.00s...
+    ✓ OCR and Ollama agree: 345.67
+
+  [VALIDATION] Running Ollama check at 8.00s...
+    ⚠ Correction: OCR=34567 → Ollama=345.67
+
+=================================================================
+CUSTOMIZATION
+=================================================================
+
+Validate more often (every 2 seconds):
+    python ocr.py video.mp4 --use-ollama --validation-interval 2.0
+
+Validate less often (every 10 seconds):
+    python ocr.py video.mp4 --use-ollama --validation-interval 10.0
+
+Skip frames for faster processing:
+    python ocr.py video.mp4 --use-ollama --frame-skip 5
+
+Save annotated video:
+    python ocr.py video.mp4 --use-ollama --save-annotated-video
+
+=================================================================
+BENEFITS OF THIS APPROACH
+=================================================================
+
+✅ FREE - No API costs, runs 100% locally
+✅ FAST - Real-time OCR (20 FPS)
+✅ ACCURATE - AI validates and corrects mistakes
+✅ UNLIMITED - No rate limits or token limits
+✅ OFFLINE - Works without internet
+✅ SMART - Handles decimal point issues automatically
+
+=================================================================
+TROUBLESHOOTING
+=================================================================
+
+Problem: "Could not connect to Ollama"
+Solution: Run start_ollama.bat first
+
+Problem: Ollama is slow
+Solution: Increase --validation-interval to 10.0
+
+Problem: Want to test Ollama manually
+Solution: Run "ollama run llava" in PowerShell
+
+=================================================================
+FILES CREATED
+=================================================================
+
+ocr.py                          - Main OCR script (enhanced)
+ollama_validator.py             - Ollama integration module
+start_ollama.bat                - Start Ollama service
+run_ocr_with_validation.bat     - Easy run script (edit VIDEO_PATH)
+OLLAMA_SETUP.md                 - Detailed documentation
+
+=================================================================
+
+For detailed documentation, see: OLLAMA_SETUP.md
+
+Happy processing! 🎉

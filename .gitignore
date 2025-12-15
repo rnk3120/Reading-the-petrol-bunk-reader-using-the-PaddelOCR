@@ -1,0 +1,32 @@
+# Ignore results directory (CSVs, annotated videos/images)
+results/
+*.csv
+*.json
+*.jpg
+*.mp4
+
+# Videos in root
+*.mp4
+
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment folders
+ocr_env/
+.venv/
+env/
+
+# IDE settings
+.vscode/
+.idea/
+
+# Text logs
+*.log
+
+# PaddleOCR logs
+inference_results/
+output/
+log_output/
+.paddleocr/

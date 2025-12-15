@@ -1,0 +1,21 @@
+# NumPy Compatibility Fix Commands
+# Copy and paste these on your Linux system
+
+# Step 1: Fix NumPy version (downgrade to compatible version)
+pip install "numpy<2.0.0" --force-reinstall
+
+# Step 2: Verify NumPy version
+python3 -c "import numpy; print('NumPy version:', numpy.__version__)"
+
+# Step 3: Test PaddlePaddle (no ABI warning should appear)
+python3 -c "import paddle; print('PaddlePaddle version:', paddle.__version__)"
+
+# Step 4: Test PaddleOCR initialization
+python3 << 'EOF'
+from paddleocr import PaddleOCR
+ocr = PaddleOCR(lang='en', use_angle_cls=True, show_log=False)
+print('PaddleOCR works!')
+EOF
+
+# Step 5: Run your OCR script
+python ocr.py /home/blp/Nitesh/OCR/OCR_Videos/petrol_reader_1.mp4 --out ./results --mode video --engine paddle --langs en --n-rois 4 --frame-skip 0 --save-annotated-video
